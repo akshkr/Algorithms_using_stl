@@ -3,7 +3,8 @@
 #include <stack>
 
 using namespace std;
- 
+
+
 class Graph {
     int V;    // nb vertices
  
@@ -32,6 +33,7 @@ void Graph::addEdge(int v, int w) {
     adj[v].push_back(w); // Add w to v’s list.
 }
  
+
 // A recursive function used by topologicalSort
 void Graph::topologicalSortUtil(int v, bool visited[], stack<int> &Stack) {
     // Mark the current node as visited.
