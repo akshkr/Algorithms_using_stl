@@ -1,0 +1,50 @@
+//Program to solve inversion count problem - Pair of elements such that A[i]>A[j] for i<j
+#include <bits/stdc++.h>
+using namespace std;
+#define mk make_pair
+#define loop(i,x,n) for(int i=x;i<n;i++)
+#define sf scanf
+#define pf printf
+#define pb push_back
+#define ll long long int
+#define PII pair<int,int>
+ll bit1[1000002];
+int n;
+void update(int pos)
+{
+    for(int i=pos;i<=n;i+=(i&-i))
+        bit1[i]+=1;
+}
+ll query(int range)
+{
+    ll sum=0;
+    for(int i=range;i>0;i-=(i&-i))
+    sum+=bit1[i];
+    return sum;
+}
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    //Above two lines are for fast input/output
+    cin>>n; //Taking input the size of array
+    ll ans=0;   //Storing the total no of inversion count
+    ll arr[n],temp[n];  //Array Declaration
+    loop(i,0,n)
+    cin>>arr[i],        //Taking input the elements of array
+    temp[i]=arr[i];     //Temporary array to store contents of arr
+    sort(temp,temp+n);  //stl used for sorting temp array
+    loop(i,0,n)
+    arr[i]=lower_bound(temp,temp+n,arr[i])-temp+1;      //storing the rank of element according to its value
+    ll f[n];
+    for(int i=n-1;i>=0;i--)
+        f[i]=query(arr[i]-1),   //finds no of elements on right that is less than current element.
+        update(arr[i]);     //Updating the rightmost element occured till now
+    memset(bit1,0,sizeof(bit1));        //Initializing bit1 array with 0
+    loop(i,0,n)
+    ans+=(query(n-arr[i])*f[i]),  //Calculating Total No of inversions 
+    update(n-arr[i]+1);
+    cout<<ans<<endl;
+
+    return 0;
+}
