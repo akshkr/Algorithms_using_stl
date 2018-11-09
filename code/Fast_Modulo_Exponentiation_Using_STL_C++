@@ -1,0 +1,25 @@
+//Program to find a^b mod 10^9+7
+#include <bits/stdc++.h>
+using namespace std;
+#define mod 1000000007 //Initializing value of mod
+#define ll long long int
+ll power(ll x,ll y)
+{
+    ll ans=1;   //variable to store the answer
+    while(y)        //run loop till y>0
+    {
+        if(y%2) //if y is odd
+            ans*=x; //update ans
+        x*=x;       //multiply x by itself to reduce power by even number 2
+        x%=mod;     //taking mod of the number to get in range limit of long long int
+        ans%=mod;   //taking mod of the number to get in range limit of long long int
+        y/=2;       //reducing power by 2
+    }
+    return ans; //return ans
+}
+int main()
+{
+    ll a=4,b=30000000;  //Taking random values of a and b
+    cout<<power(a,b)%mod<<endl; //Calling function to find power a^b and print it
+    return 0;
+}
