@@ -1,0 +1,56 @@
+//Implementation Of DSU
+#include <bits/stdc++.h>
+using namespace std;
+#define loop(i,x,n) for(int i=x;i<n;i++)
+#define sf scanf
+#define pf printf
+#define ll long long int
+#define pb push_back
+#define mk make_pair
+int par[100001];//parent array
+int siz[100001];//size of component array
+int root(int x)
+{
+    while(par[x]!=x)    //Loop to search the the topmost parent of x and return it
+        x=par[x];       //Loop will continue until x is a parent of itself
+    return x;
+}
+void unio(int x,int y)
+{
+    int rootx=root(x);  //finding topmost parent of x
+    int rooty=root(y);  //finding topmost parent of y
+    if(siz[rootx]>=siz[rooty])  //if size of component of rootx is more or equal to rooty
+    {
+        siz[rootx]+=siz[rooty];     //Increase the size of component of rootx
+        par[rooty]=rootx;           //Make parent of rooty component as rootx
+    }
+    else
+    {
+         siz[rooty]+=siz[rootx];    //Increase the size of component of rooty
+         par[rootx]=rooty;          //Make parent of rootx component as rpoty
+    }
+}
+int finds(int x,int y)
+{
+    if(root(x)!=root(y))    //if x and y doesn't belong to same component return 1 to unite them
+        return 1;
+    return 0;
+}
+int main()
+{
+    int n=10;
+    loop(i,0,10)
+    par[i]=i,//initially make parent of i as itself.
+    siz[i]=1;//Initially size of each component is 1
+    int x,y;
+    int q=5;    //queries
+    while(q--)
+    {
+        cin>>x>>y;
+        if(finds(x,y)) //if x and y doesn't belong to same component then unite them
+        unio(x,y);
+    }
+    loop(i,0,10)
+    cout<<siz[i]<<endl; //printing size of each component
+    return 0;
+}
